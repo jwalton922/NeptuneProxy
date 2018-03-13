@@ -5,5 +5,7 @@ This project is to help avoid CORS issues when hosting [GraphExp](https://github
 
 2 In GraphExp, change your graphConf host to the server running NeptuneProxy and port to 8080 (assuming defaults)
 
-3 In GraphExp, change graphioGremlin.js run_ajax_request_with_callback function so in the $.ajax request you set the content type by adding the following line:
+3 Build and copy the jar to your server. Start the proxy app by running: java -jar ${path_to_jar} --'endpoint=http://your-neptune-endpoint:8182'  
+
+4 In GraphExp, change graphioGremlin.js run_ajax_request_with_callback function so in the $.ajax request you set the content type by adding the following line:
   * contentType:"application/json; charset=utf-8" 

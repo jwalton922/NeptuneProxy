@@ -9,6 +9,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("")
 public class QueryController {
     private static ObjectMapper mapper = new ObjectMapper();
-    String endpoint = "http://jyour-end-point:8182";
+    
+    @Value("${endpoint}")
+    String endpoint = "http://your-end-point:8182";
+        
     
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "", method = RequestMethod.POST,consumes ={MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE},produces = "application/json")
@@ -36,7 +40,7 @@ public class QueryController {
             postRequest.setHeader("Content-Type", "application/json");
 //            request.addParameter("size", "100");
             CloseableHttpClient client = HttpClients.createDefault();
-            CloseableHttpResponse response = client.execute(HttpHost.create(endpoint), postRequest);
+            CloseableHttpResponse response = client.execute(new HttpHost(endpoint), postRequest);
             String responseString = EntityUtils.toString(response.getEntity());
             return ResponseEntity.ok(mapper.readValue(responseString, Map.class));
 
