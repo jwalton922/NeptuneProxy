@@ -40,8 +40,10 @@ public class QueryController {
             postRequest.setHeader("Content-Type", "application/json");
 //            request.addParameter("size", "100");
             CloseableHttpClient client = HttpClients.createDefault();
-            CloseableHttpResponse response = client.execute(new HttpHost(endpoint), postRequest);
+            CloseableHttpResponse response = client.execute(new HttpHost("josh-small.cnyckbjgsrik.us-east-1-beta.rds.amazonaws.com", 8182), postRequest);
             String responseString = EntityUtils.toString(response.getEntity());
+            response.close();
+            client.close();
             return ResponseEntity.ok(mapper.readValue(responseString, Map.class));
 
         } catch (Exception e) {
